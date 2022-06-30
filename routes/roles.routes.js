@@ -19,7 +19,7 @@ rolesRoutes.get("/", listarRoles);
 rolesRoutes.post("/", registrarRol);
 
 rolesRoutes
-  .use("/id", rolExistente)
+  .use("/:id", rolExistente)
   .route("/:id")
   .get(buscarRol)
   .patch(actualizarRol)

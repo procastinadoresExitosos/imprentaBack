@@ -40,7 +40,8 @@ const actualizarRol = catchAsync(async (req, res, next) => {
 
 const deshabilitarRol = catchAsync(async (req, res, next) => {
   const { rol } = req;
-  await rol.update({ status: "inactivo" });
+  await rol.update({ estado: "inactivo" });
+  res.status(203).json({ estado: "deshabilitado" });
 });
 
 module.exports = {

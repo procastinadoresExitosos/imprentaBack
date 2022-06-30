@@ -10,13 +10,19 @@ const {
   buscarUsuario,
   actualizarUsuario,
   deshabilitarUsuario,
+  login,
+  validarToken,
 } = require("../controllers/usuarios.controller");
 
 const usuariosRoutes = Router();
 
-usuariosRoutes.get("/", listarUsuarios);
+usuariosRoutes.post("/login", login);
+
+usuariosRoutes.use(validarToken);
 
 usuariosRoutes.post("/", registrarUsuario);
+
+usuariosRoutes.get("/", listarUsuarios);
 
 usuariosRoutes
   .use("/:id", usuarioExistente)
