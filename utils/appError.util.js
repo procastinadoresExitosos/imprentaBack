@@ -1,0 +1,13 @@
+class AppError extends Error {
+  constructor(message, statusCode) {
+    super(message);
+
+    this.message = message;
+    this.statusCode = statusCode;
+    this.status = `${statusCode}`.startsWith("4") ? "Error" : "Fallo interno";
+
+    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
+module.exports = { AppError };
