@@ -18,7 +18,7 @@ const usuariosRoutes = Router();
 
 usuariosRoutes.post("/login", login);
 
-usuariosRoutes.use(validarToken);
+// usuariosRoutes.use(validarToken);
 
 usuariosRoutes.post("/", registrarUsuario);
 

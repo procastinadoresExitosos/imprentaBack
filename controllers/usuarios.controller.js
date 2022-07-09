@@ -70,7 +70,7 @@ const login = catchAsync(async (req, res, next) => {
 
   // Comparamos la contraseña ingresada con la de la bd
   if (!usuario || !(await bcrypt.compare(contrasena, usuario.contrasena))) {
-    return next(new AppError("Credenciales incorrectas", 400));
+    return next(new AppError("Credenciales incorrectas", 401));
   }
 
   // Generamos el JWT
