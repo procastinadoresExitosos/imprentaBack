@@ -12,6 +12,7 @@ const Roles = db.define(
     nombre: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     estado: {
       type: DataTypes.STRING,

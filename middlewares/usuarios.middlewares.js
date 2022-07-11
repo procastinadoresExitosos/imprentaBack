@@ -7,7 +7,10 @@ const { catchAsync } = require("../utils/catchAsync.util");
 
 const usuarioExistente = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const usuario = await Usuarios.findOne({ where: { id, estado: "activo" } });
+  const usuario = await Usuarios.findOne({
+    where: { id, estado: "activo" },
+    attributes: { exclude: ["contrasena"] },
+  });
   if (!usuario) {
     return next(
       new AppError("El usuario no existe o ya fue deshabilitado", 404)

@@ -38,6 +38,7 @@ const Usuarios = db.define(
     rolId: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 4,
     },
     estado: {
       type: DataTypes.STRING,

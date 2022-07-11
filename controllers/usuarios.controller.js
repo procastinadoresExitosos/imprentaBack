@@ -12,6 +12,7 @@ const { AppError } = require("../utils/appError.util");
 
 const listarUsuarios = catchAsync(async (req, res, next) => {
   const usuarios = await Usuarios.findAll({
+    where: { estado: "activo" },
     attributes: { exclude: ["contrasena", "rolId"] },
     include: Roles,
   });
@@ -51,13 +52,13 @@ const actualizarUsuario = catchAsync(async (req, res, next) => {
   const { usuario } = req;
   const { telefono } = req.body;
   await usuario.update({ telefono });
-  res.status(200).json(usuario);
+  res.status(200).json({ usuario });
 });
 
 const deshabilitarUsuario = catchAsync(async (req, res, next) => {
   const { usuario } = req;
   await usuario.update({ estado: "inactivo" });
-  res.status(200).json(usuario);
+  res.status(200).json({ usuario });
 });
 
 const login = catchAsync(async (req, res, next) => {
@@ -83,38 +84,6 @@ const login = catchAsync(async (req, res, next) => {
   res.status(200).json({ token, usuario });
 });
 
-const validarToken = catchAsync(async (req, res, next) => {
-  let token;
-
-  // Usamos el token recibido
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
-  ) {
-    // ['Bearer', 'token']
-    token = req.headers.authorization.split(" ")[1];
-  }
-
-  if (!token) {
-    return next(new AppError("Sesión invalida", 403));
-  }
-
-  // validar token
-  const decoded = await jwt.verify(token, process.env.JWT_SECRET);
-
-  // decoded returns -> { id: 1, iat: 1651713776, exp: 1651717376 }
-  const usuario = await Usuarios.findOne({
-    where: { id: decoded.id, estado: "activo" },
-  });
-
-  if (!usuario) {
-    return next(new AppError("La sesión ha expirado", 403));
-  }
-
-  req.usuarioEnSesion = usuario;
-  next();
-});
-
 module.exports = {
   listarUsuarios,
   registrarUsuario,
@@ -122,5 +91,4 @@ module.exports = {
   actualizarUsuario,
   deshabilitarUsuario,
   login,
-  validarToken,
 };

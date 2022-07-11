@@ -2,6 +2,10 @@ const { Router } = require("express");
 
 // Middlewares
 const { rolExistente } = require("../middlewares/roles.middlewares");
+const {
+  validarToken,
+  validarAdmin,
+} = require("../middlewares/autenticacion.middleware");
 
 // Controladores
 const {
@@ -17,6 +21,7 @@ const rolesRoutes = Router();
 rolesRoutes.get("/", listarRoles);
 
 rolesRoutes.post("/", registrarRol);
+rolesRoutes.use(validarToken, validarAdmin);
 
 rolesRoutes
   .use("/:id", rolExistente)

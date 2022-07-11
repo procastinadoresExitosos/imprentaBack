@@ -1,7 +1,15 @@
+const rateLimit = require("express-rate-limit");
+
 const { Router } = require("express");
 
 // Middlewares
 const { usuarioExistente } = require("../middlewares/usuarios.middlewares");
+const {
+  validarToken,
+  validarAdmin,
+  validarUsuario,
+  validarAdminOUsuario,
+} = require("../middlewares/autenticacion.middleware");
 
 // Controladores
 const {
@@ -11,16 +19,24 @@ const {
   actualizarUsuario,
   deshabilitarUsuario,
   login,
-  validarToken,
 } = require("../controllers/usuarios.controller");
+const {
+  validacionDeUsuarios,
+} = require("../middlewares/validadores.middleware");
 
 const usuariosRoutes = Router();
 
-usuariosRoutes.post("/login", login);
+const limiteDeIntentosLogin = rateLimit({
+  windowMs: 1 * 60 * 60 * 1000,
+  max: 3,
+  message: "Haz intentado iniciar sesion varias veces, intentalo más tarde",
+});
 
-// usuariosRoutes.use(validarToken);
+usuariosRoutes.post("/login", limiteDeIntentosLogin, login);
 
-usuariosRoutes.post("/", registrarUsuario);
+usuariosRoutes.post("/", validacionDeUsuarios, registrarUsuario);
+
+usuariosRoutes.use(validarToken);
 
 usuariosRoutes.get("/", listarUsuarios);
 
@@ -28,7 +44,7 @@ usuariosRoutes
   .use("/:id", usuarioExistente)
   .route("/:id")
   .get(buscarUsuario)
-  .patch(actualizarUsuario)
-  .delete(deshabilitarUsuario);
+  .patch(validarUsuario, actualizarUsuario)
+  .delete(validarAdminOUsuario, deshabilitarUsuario);
 
 module.exports = { usuariosRoutes };
