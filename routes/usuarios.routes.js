@@ -43,12 +43,18 @@ usuariosRoutes.use(validarToken);
 
 usuariosRoutes.get("/", listarUsuarios);
 
+usuariosRoutes.patch(
+  "/rol/:id",
+  usuarioExistente,
+  validarAdmin,
+  actualizarRolUsuario
+);
+
 usuariosRoutes
   .use("/:id", usuarioExistente)
   .route("/:id")
   .get(buscarUsuario)
   .patch(validarAdminOUsuario, actualizarUsuario)
-  .patch(validarAdmin, actualizarRolUsuario)
   .delete(validarAdminOUsuario, deshabilitarUsuario);
 
 module.exports = { usuariosRoutes };
