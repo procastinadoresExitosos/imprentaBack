@@ -57,8 +57,8 @@ const actualizarUsuario = catchAsync(async (req, res, next) => {
 
 const actualizarRolUsuario = catchAsync(async (req, res, next) => {
   const { usuario } = req;
-  const { telefono } = req.body;
-  await usuario.update({ telefono });
+  const { rolId } = req.body;
+  await usuario.update({ rolId });
   res.status(200).json({ usuario });
 });
 
