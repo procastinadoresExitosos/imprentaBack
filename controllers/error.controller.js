@@ -25,9 +25,9 @@ const erroresCliente = (err, req, res) => {
 
 const erroresDelConstructorUnico = (err) => {
   if (err.errors[0].path === "dni") {
-    return new AppError("Ingrese un DNI correcto.", 401);
+    return new AppError("Usted ya tiene una cuenta asociada a este DNI.", 401);
   } else if (err.errors[0].path === "email") {
-    return new AppError("Ingrese un correo valido", 401);
+    return new AppError("Este correo ya está en uso.", 401);
   }
 };
 
