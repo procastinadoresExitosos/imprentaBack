@@ -19,12 +19,12 @@ exports.validacionDeUsuarios = [
     .notEmpty()
     .withMessage("Este campo no puede estar vacio")
     .isLength({ min: 8, max: 8 })
-    .withMessage("Ingrese un DNI valido"),
+    .withMessage("Usted ya tiene una cuenta asociada a este DNI"),
   body("email")
     .notEmpty()
     .withMessage("Este campo no puede estar vacio")
     .isEmail()
-    .withMessage("El email ingresado es incorrecto"),
+    .withMessage("Usted ya tiene una cuenta asociada a este email"),
   body("contrasena")
     .notEmpty()
     .withMessage("Este campo no puede estar vacio")

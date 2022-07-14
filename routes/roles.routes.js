@@ -21,6 +21,7 @@ const rolesRoutes = Router();
 rolesRoutes.get("/", listarRoles);
 
 rolesRoutes.post("/", registrarRol);
+
 rolesRoutes.use(validarToken, validarAdmin);
 
 rolesRoutes

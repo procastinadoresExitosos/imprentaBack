@@ -19,6 +19,7 @@ const {
   actualizarUsuario,
   deshabilitarUsuario,
   login,
+  actualizarRolUsuario,
 } = require("../controllers/usuarios.controller");
 const {
   validacionDeUsuarios,
@@ -27,9 +28,11 @@ const {
 const usuariosRoutes = Router();
 
 const limiteDeIntentosLogin = rateLimit({
-  windowMs: 1 * 60 * 60 * 1000,
-  max: 3,
-  message: "Haz intentado iniciar sesion varias veces, intentalo más tarde",
+  windowMs: 1 * 60 * 1000,
+  max: 5,
+  message: {
+    message: "Haz intentado iniciar sesion varias veces, intentalo más tarde",
+  },
 });
 
 usuariosRoutes.post("/login", limiteDeIntentosLogin, login);
@@ -44,7 +47,8 @@ usuariosRoutes
   .use("/:id", usuarioExistente)
   .route("/:id")
   .get(buscarUsuario)
-  .patch(validarUsuario, actualizarUsuario)
+  .patch(validarAdminOUsuario, actualizarUsuario)
+  .patch(validarAdmin, actualizarRolUsuario)
   .delete(validarAdminOUsuario, deshabilitarUsuario);
 
 module.exports = { usuariosRoutes };

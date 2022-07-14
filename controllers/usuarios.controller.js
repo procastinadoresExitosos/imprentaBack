@@ -55,6 +55,13 @@ const actualizarUsuario = catchAsync(async (req, res, next) => {
   res.status(200).json({ usuario });
 });
 
+const actualizarRolUsuario = catchAsync(async (req, res, next) => {
+  const { usuario } = req;
+  const { telefono } = req.body;
+  await usuario.update({ telefono });
+  res.status(200).json({ usuario });
+});
+
 const deshabilitarUsuario = catchAsync(async (req, res, next) => {
   const { usuario } = req;
   await usuario.update({ estado: "inactivo" });
@@ -90,5 +97,6 @@ module.exports = {
   buscarUsuario,
   actualizarUsuario,
   deshabilitarUsuario,
+  actualizarRolUsuario,
   login,
 };
