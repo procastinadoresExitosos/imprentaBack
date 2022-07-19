@@ -20,6 +20,7 @@ const {
   deshabilitarUsuario,
   login,
   actualizarRolUsuario,
+  verificarSesion,
 } = require("../controllers/usuarios.controller");
 const {
   validacionDeUsuarios,
@@ -34,6 +35,8 @@ const limiteDeIntentosLogin = rateLimit({
     message: "Haz intentado iniciar sesion varias veces, intentalo más tarde",
   },
 });
+
+usuariosRoutes.post("/check-session", verificarSesion);
 
 usuariosRoutes.post("/login", limiteDeIntentosLogin, login);
 

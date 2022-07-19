@@ -91,6 +91,20 @@ const login = catchAsync(async (req, res, next) => {
   res.status(200).json({ token, usuario });
 });
 
+const verificarSesion = catchAsync(async (req, res, next) => {
+  const { token } = req.body;
+  const decode = await jwt.verify(token, process.env.JWT_SECRET);
+
+  const usuario = await Usuarios.findOne({
+    where: { id: decode.id },
+    attributes: { exclude: ["contrasena"] },
+  });
+
+  decode.exp > Date.now() / 1000
+    ? res.json({ usuario })
+    : res.json({ status: "Por favor, inicie sesión nuevamente." });
+});
+
 module.exports = {
   listarUsuarios,
   registrarUsuario,
@@ -99,4 +113,5 @@ module.exports = {
   deshabilitarUsuario,
   actualizarRolUsuario,
   login,
+  verificarSesion,
 };
