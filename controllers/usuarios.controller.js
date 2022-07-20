@@ -96,8 +96,9 @@ const verificarSesion = catchAsync(async (req, res, next) => {
   const decode = await jwt.verify(token, process.env.JWT_SECRET);
 
   const usuario = await Usuarios.findOne({
-    where: { id: decode.id },
-    attributes: { exclude: ["contrasena"] },
+    where: { id: decode.id, estado: "activo" },
+    attributes: { exclude: ["contrasena", "rolId"] },
+    include: Roles,
   });
 
   decode.exp > Date.now() / 1000

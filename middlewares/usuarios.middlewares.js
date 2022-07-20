@@ -1,5 +1,6 @@
 // models
 const { Usuarios } = require("../models/usuarios.model");
+const { Roles } = require("../models/roles.model");
 
 // utils
 const { AppError } = require("../utils/appError.util");
@@ -9,7 +10,8 @@ const usuarioExistente = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   const usuario = await Usuarios.findOne({
     where: { id, estado: "activo" },
-    attributes: { exclude: ["contrasena"] },
+    attributes: { exclude: ["contrasena", "rolId"] },
+    include: Roles,
   });
   if (!usuario) {
     return next(
