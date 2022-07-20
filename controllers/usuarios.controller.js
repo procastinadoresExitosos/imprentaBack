@@ -13,7 +13,7 @@ const { AppError } = require("../utils/appError.util");
 const listarUsuarios = catchAsync(async (req, res, next) => {
   const usuarios = await Usuarios.findAll({
     where: { estado: "activo" },
-    attributes: { exclude: ["contrasena", "rolId"] },
+    attributes: { exclude: ["contrasena"] },
     include: Roles,
   });
   res.status(200).json(usuarios);
@@ -97,7 +97,7 @@ const verificarSesion = catchAsync(async (req, res, next) => {
 
   const usuario = await Usuarios.findOne({
     where: { id: decode.id, estado: "activo" },
-    attributes: { exclude: ["contrasena", "rolId"] },
+    attributes: { exclude: ["contrasena"] },
     include: Roles,
   });
 

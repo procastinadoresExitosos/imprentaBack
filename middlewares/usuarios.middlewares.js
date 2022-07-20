@@ -10,7 +10,7 @@ const usuarioExistente = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   const usuario = await Usuarios.findOne({
     where: { id, estado: "activo" },
-    attributes: { exclude: ["contrasena", "rolId"] },
+    attributes: { exclude: ["contrasena"] },
     include: Roles,
   });
   if (!usuario) {
