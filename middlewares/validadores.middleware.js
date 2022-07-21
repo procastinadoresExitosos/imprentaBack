@@ -37,3 +37,9 @@ exports.validacionesDeRoles = [
   body("nombre").notEmpty().withMessage("Este campo no puede estar vacio"),
   verificarCampos,
 ];
+
+exports.validacionesDeServicios = [
+  body("nombre").notEmpty().withMessage("Este campo no puede estar vacio"),
+  body("descripcion").notEmpty().withMessage("Este campo no puede estar vacio"),
+  verificarCampos,
+];

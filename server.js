@@ -15,7 +15,7 @@ db.authenticate()
 relaciones();
 
 // Sincronizar con la BD
-db.sync()
+db.sync({ force: true })
   .then(() => console.log("Base de datos funcionando"))
   .catch((err) => console.log(err));
 

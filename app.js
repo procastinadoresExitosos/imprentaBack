@@ -15,6 +15,7 @@ const { globalErrorHandler } = require("./controllers/error.controller");
 
 // Utils
 const { AppError } = require("./utils/appError.util");
+const { serviciosRoutes } = require("./routes/servicios.routes");
 
 // Inicializamos express
 const app = express();
@@ -48,6 +49,7 @@ process.env.NODE_ENV === "produccion"
 // Endpoints
 app.use("/api/v1/usuarios", usuariosRoutes);
 app.use("/api/v1/roles", rolesRoutes);
+app.use("/api/v1/servicios", serviciosRoutes);
 
 // Handle incoming unknown routes to the server
 app.all("*", (req, res, next) => {
