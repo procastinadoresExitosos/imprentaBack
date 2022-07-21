@@ -34,6 +34,6 @@ exports.actualizarServicio = catchAsync(async (req, res, next) => {
 
 exports.deshabilitarServicio = catchAsync(async (req, res, next) => {
   const { dbServicio } = req;
-  await dbServicio.update({ estadp: "inactivo" });
+  await dbServicio.update({ estado: "inactivo" });
   res.status(200).json({ estado: "eliminado" });
 });
