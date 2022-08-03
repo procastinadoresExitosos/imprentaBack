@@ -24,9 +24,9 @@ const serviciosRoutes = Router();
 
 serviciosRoutes.get("/", obtenerServiciosActivos);
 
-serviciosRoutes.get("/todos", obtenerServiciosPorId);
+serviciosRoutes.get("/todos", obtenerServicios);
 
-serviciosRoutes.get("/:id", servicioExistenta, obtenerServicios);
+serviciosRoutes.get("/:id", servicioExistenta, obtenerServiciosPorId);
 
 serviciosRoutes.use(validarToken, validarAdmin);
 
